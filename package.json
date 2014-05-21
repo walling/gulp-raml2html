@@ -23,7 +23,7 @@
   "dependencies": {
     "gulp-util": "^2.2.14",
     "raml2html": "^0.17.1",
-    "through2": "^0.4.1"
+    "through2": "^1.0.0"
   },
   "devDependencies": {
     "chai": "^1.9.1",
