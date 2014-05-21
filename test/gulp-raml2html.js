@@ -5,6 +5,8 @@
 var raml2html = require('..');
 var stream = require('stream');
 var gutil = require('gulp-util');
+var path = require('path');
+var fs = require('fs');
 
 var File = gutil.File;
 
@@ -76,6 +78,59 @@ describe('gulp-raml2html', function() {
       raml2htmlInstance.write(new File({
         path: 'test.json',
         contents: new Buffer(JSON.stringify({ title: 'Example' }))
+      }));
+    });
+
+    it('supports bigger files', function(done) {
+      var raml2htmlInstance = raml2html();
+
+      raml2htmlInstance.on('data', function(file) {
+        if (file.path === 'big.html') {
+          file.isBuffer().should.equal(true);
+          file.contents.toString('utf8').should.match(/can handle big files/i);
+          done();
+        }
+      });
+
+      var bigRamlDoc =
+        '#%RAML 0.8\n' +
+        'title: Example\n' +
+        'documentation:\n' +
+        '  - title: Test\n' +
+        '    content: |\n' +
+        '      More content here. Including **bold** text!';
+
+      while (bigRamlDoc.length < 100 * 1024) {
+        bigRamlDoc +=
+          ' Here is a lot of text just to\n' +
+          '      make the file bigger in order to test for very big files. We need to\n' +
+          '      repeat this in order to get more text. We really want the test to show\n' +
+          '      that it can handle big files and not fail.';
+      }
+
+      raml2htmlInstance.write(new File({
+        path: 'big.raml',
+        contents: new Buffer(bigRamlDoc)
+      }));
+    });
+
+    it('can convert an example RAML file', function(done) {
+      var raml2htmlInstance = raml2html();
+
+      var ramlContents = fs.readFileSync(path.join(__dirname, 'example.raml'));
+      var htmlContents = fs.readFileSync(path.join(__dirname, 'example.html'));
+
+      raml2htmlInstance.on('data', function(file) {
+        if (file.path === 'example.html') {
+          file.isBuffer().should.equal(true);
+          file.contents.toString('utf8').should.equal('' + htmlContents);
+          done();
+        }
+      });
+
+      raml2htmlInstance.write(new File({
+        path: 'example.raml',
+        contents: ramlContents
       }));
     });
 
