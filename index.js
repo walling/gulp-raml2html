@@ -66,7 +66,7 @@ function gulpRaml2html(options) {
 
     if (file.isBuffer()) {
       if (file.contents.slice(0, 11).toString('binary') === '#%RAML 0.8\n') {
-        return convertFile(file, '' + file.contents, this, callback); // got RAML signature
+        return convertFile(file, file.contents, this, callback); // got RAML signature
       } else if (supportJsonInput) {
         var json = parseJSON(file.contents);
         if (json) {
