@@ -5,10 +5,19 @@
   "author": "Bjarke Walling <bwp@bwp.dk>",
   "license": "MIT",
   "keywords": [
+    "gulpplugin",
+    "gulpfriendly",
     "raml",
+    "raml2html",
+    "ramlhtml",
+    "api",
+    "apidesign",
+    "apidoc",
+    "apx",
+    "restful",
+    "htmldoc",
     "html",
-    "gulp",
-    "raml2html"
+    "gulp"
   ],
   "scripts": {
     "test": "node test"
