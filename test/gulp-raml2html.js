@@ -117,11 +117,13 @@ describe('gulp-raml2html', function() {
     it('can convert an example RAML file', function(done) {
       var raml2htmlInstance = raml2html();
 
-      var ramlContents = fs.readFileSync(path.join(__dirname, 'api/example.raml'));
-      var htmlContents = fs.readFileSync(path.join(__dirname, 'api/example.html'));
+      var ramlPath = path.join(__dirname, 'api', 'example.raml');
+      var htmlPath = path.join(__dirname, 'api', 'example.html');
+      var ramlContents = fs.readFileSync(ramlPath);
+      var htmlContents = fs.readFileSync(htmlPath);
 
       raml2htmlInstance.on('data', function(file) {
-        if (file.path === 'api/example.html') {
+        if (file.path === htmlPath) {
           file.isBuffer().should.equal(true);
           file.contents.toString('utf8').should.equal('' + htmlContents);
           done();
@@ -129,7 +131,7 @@ describe('gulp-raml2html', function() {
       });
 
       raml2htmlInstance.write(new File({
-        path: 'api/example.raml',
+        path: ramlPath,
         contents: ramlContents
       }));
     });
