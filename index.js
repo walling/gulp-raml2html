@@ -12,11 +12,11 @@ var PLUGIN_NAME = 'gulp-raml2html';
 var PluginError = gutil.PluginError;
 var File = gutil.File;
 
-function raml2html(filename, source, callback) {
+function raml2html(filename, source, https, callback) {
   var cwd = process.cwd();
   var nwd = path.resolve(path.dirname(filename));
   process.chdir(nwd);
-  raml2htmlLib.parse(source, function(html) {
+  raml2htmlLib.parseWithConfig(source, raml2htmlLib.getDefaultConfig(https), function(html) {
     process.chdir(cwd);
     process.nextTick(function() {
       callback(null, html);
@@ -34,8 +34,8 @@ function raml2html(filename, source, callback) {
   });
 }
 
-function convertFile(file, source, self, callback) {
-  raml2html(file.path, source, function(error, html) {
+function convertFile(file, source, https, self, callback) {
+  raml2html(file.path, source, https, function(error, html) {
     if (error) {
       self.emit('error', new PluginError(PLUGIN_NAME, error));
     } else {
@@ -62,6 +62,7 @@ function parseJSON(buffer) {
 function gulpRaml2html(options) {
   options = options || {};
   var supportJsonInput = !!options.supportJsonInput;
+  var https = options.https || false;
 
   return through2.obj(function(file, enc, callback) {
     this.push(file); // always send the same file through
@@ -73,11 +74,11 @@ function gulpRaml2html(options) {
     if (file.isBuffer()) {
       if (file.contents.slice(0, 11).toString('binary') === '#%RAML 0.8\n' ||
         file.contents.slice(0, 12).toString('binary') === '#%RAML 0.8\r\n') {
-        return convertFile(file, file.contents, this, callback); // got RAML signature
+        return convertFile(file, file.contents, https, this, callback); // got RAML signature
       } else if (supportJsonInput) {
         var json = parseJSON(file.contents);
         if (json) {
-          return convertFile(file, json, this, callback); // valid JSON
+          return convertFile(file, json, https, this, callback); // valid JSON
         }
       }
       return callback();

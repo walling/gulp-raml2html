@@ -81,6 +81,30 @@ describe('gulp-raml2html', function() {
       }));
     });
 
+    it('outputs assets over HTTPS', function(done) {
+      var raml2htmlInstance = raml2html({
+        https: true
+      });
+
+      raml2htmlInstance.on('data', function(file) {
+        if (file.path === 'test.html') {
+          file.isBuffer().should.equal(true);
+
+          var content = file.contents.toString('utf8');
+
+          content.should.match(/https:\/\//);
+          content.should.not.match(/http:\/\//);
+
+          done();
+        }
+      });
+
+      raml2htmlInstance.write(new File({
+        path: 'test.raml',
+        contents: new Buffer('#%RAML 0.8\ntitle: Example')
+      }));
+    });
+
     it('supports bigger files', function(done) {
       var raml2htmlInstance = raml2html();
 
@@ -119,13 +143,13 @@ describe('gulp-raml2html', function() {
 
       var ramlPath = path.join(__dirname, 'api', 'example.raml');
       var htmlPath = path.join(__dirname, 'api', 'example.html');
+
       var ramlContents = fs.readFileSync(ramlPath);
-      var htmlContents = fs.readFileSync(htmlPath);
 
       raml2htmlInstance.on('data', function(file) {
         if (file.path === htmlPath) {
           file.isBuffer().should.equal(true);
-          file.contents.toString('utf8').should.equal('' + htmlContents);
+          file.contents.toString('utf8').should.match(/Welcome to the Example Documentation/);
           done();
         }
       });
@@ -136,18 +160,18 @@ describe('gulp-raml2html', function() {
       }));
     });
 
-    it('can convert an example RAML file in dos line ending', function(done) {
+    it('can convert an example RAML file in DOS line ending', function(done) {
       var raml2htmlInstance = raml2html();
 
       var ramlDosPath = path.join(__dirname, 'api', 'example.dos.raml');
       var htmlDosPath = path.join(__dirname, 'api', 'example.dos.html');
+
       var ramlContents = fs.readFileSync(ramlDosPath);
-      var htmlContents = fs.readFileSync(path.join(__dirname, 'api', 'example.html'));
 
       raml2htmlInstance.on('data', function(file) {
         if (file.path === htmlDosPath) {
           file.isBuffer().should.equal(true);
-          file.contents.toString('utf8').should.equal('' + htmlContents);
+          file.contents.toString('utf8').should.match(/Welcome to the Example Documentation/);
           done();
         }
       });
@@ -157,7 +181,5 @@ describe('gulp-raml2html', function() {
         contents: ramlContents
       }));
     });
-
   });
-
 });
