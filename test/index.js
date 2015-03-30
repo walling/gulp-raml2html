@@ -8,4 +8,8 @@ var mocha = new Mocha();
 mocha.addFile(__dirname + '/gulp-raml2html');
 
 chai.should();
-mocha.run();
+mocha.run(function (failures){
+  process.on('exit', function () {
+    process.exit(failures);
+  });
+});
