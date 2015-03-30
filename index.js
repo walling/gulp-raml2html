@@ -11,12 +11,13 @@ var PLUGIN_NAME = 'gulp-raml2html';
 
 var PluginError = gutil.PluginError;
 var File = gutil.File;
+var useHttps = false;
 
 function raml2html(filename, source, callback) {
   var cwd = process.cwd();
   var nwd = path.resolve(path.dirname(filename));
   process.chdir(nwd);
-  raml2htmlLib.parse(source, function(html) {
+  raml2htmlLib.parseWithConfig(source, raml2htmlLib.getDefaultConfig(useHttps), function(html) {
     process.chdir(cwd);
     process.nextTick(function() {
       callback(null, html);
@@ -62,6 +63,7 @@ function parseJSON(buffer) {
 function gulpRaml2html(options) {
   options = options || {};
   var supportJsonInput = !!options.supportJsonInput;
+  useHttps = !!options.useHttps;
 
   return through2.obj(function(file, enc, callback) {
 
