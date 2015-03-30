@@ -30,12 +30,12 @@
     "url": "https://github.com/walling/gulp-raml2html/issues"
   },
   "dependencies": {
-    "gulp-util": "^2.2.16",
-    "raml2html": "^0.30.0",
-    "through2": "^1.0.0"
+    "gulp-util": "^3.0.3",
+    "raml2html": "^1.6.0",
+    "through2": "^0.6.3"
   },
   "devDependencies": {
-    "chai": "^1.9.1",
-    "mocha": "^1.20.0"
+    "chai": "^2.2.0",
+    "mocha": "^2.2.1"
   }
 }

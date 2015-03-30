@@ -16,7 +16,7 @@ function raml2html(filename, source, https, callback) {
   var cwd = process.cwd();
   var nwd = path.resolve(path.dirname(filename));
   process.chdir(nwd);
-  raml2htmlLib.parseWithConfig(source, raml2htmlLib.getDefaultConfig(https), function(html) {
+  raml2htmlLib.render(source, raml2htmlLib.getDefaultConfig(https), function(html) {
     process.chdir(cwd);
     process.nextTick(function() {
       callback(null, html);
