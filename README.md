@@ -2,19 +2,21 @@
 
 A simple [gulp](http://gulpjs.com/) plugin to automate the process of generating HTML documentation based on a RAML API.
 
-*If you have any difficulties with the output of this plugin, please use the [raml2html tracker](https://github.com/kevinrenskers/raml2html/issues).*
+*If you have any difficulties with the output of this plugin, please use the [raml2html tracker](https://github.com/raml2html/raml2html/issues).*
 
-###Install via [npm](https://npmjs.org/package/gulp-raml2html):
+**Note**: This plugin wraps [raml2html](https://github.com/raml2html/raml2html).
+
+# Install
+
+## npm
 
 ```
 npm install gulp-raml2html --save-dev
 ```
 
-**Note**: This plugin wraps [raml2html](https://github.com/kevinrenskers/raml2html).
-
 ## Usage
 
-###gulp basis
+### gulp basis
 Gulp is a build life-cycle tool. You can configure several tasks to be ran when entering `gulp [taskname]` in your console ('default' task is invoked if not specified). It can also be invoked by Continuous Integration tools.
 To be able to use it, your application **must** have a `gulpfile.js` with the possible tasks configured.
 
@@ -42,7 +44,7 @@ gulp.task('apidoc', function() {
 `gulp apidoc` will grab `api.raml` and generate a `build` folder with the generated HTML on it.
 
 
-##Example
+## Example
 Included in this repository. Click [here](./example) to go to the "example" folder
 
 ## API
