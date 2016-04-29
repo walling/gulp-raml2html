@@ -1,3 +1,5 @@
+*`gulp-raml2html` will shortly be back in the game. You can help by submitting PRs on `develop branch. Thanks in advance!`*
+
 # gulp-raml2html [![Build Status](https://travis-ci.org/walling/gulp-raml2html.svg?branch=master)](https://travis-ci.org/walling/gulp-raml2html) [![NPM version](https://badge.fury.io/js/gulp-raml2html.png)](http://badge.fury.io/js/gulp-raml2html) [![Dependency Status](https://gemnasium.com/walling/gulp-raml2html.png)](https://gemnasium.com/walling/gulp-raml2html)
 
 A simple [gulp](http://gulpjs.com/) plugin to automate the process of generating HTML documentation based on a RAML API.
