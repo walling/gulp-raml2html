@@ -1,8 +1,26 @@
 {
   "name": "gulp-raml2html",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "A simple RAML to HTML documentation generator.",
-  "author": "Bjarke Walling <bwp@bwp.dk>",
+  "contributors": [{
+    "name": "Bjarke Walling",
+    "email": "bwp@bwp.dk"
+  }, {
+    "name": "Tomasz Ducin",
+    "email": "tomasz@ducin.it"
+  }, {
+    "name": "Jan Killian"
+  }],
+  "scripts": {
+    "test": "node test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/walling/gulp-raml2html.git"
+  },
+  "bugs": {
+    "url": "https://github.com/walling/gulp-raml2html/issues"
+  },
   "license": "MIT",
   "keywords": [
     "gulpplugin",
@@ -19,19 +37,9 @@
     "html",
     "gulp"
   ],
-  "scripts": {
-    "test": "node test"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/walling/gulp-raml2html.git"
-  },
-  "bugs": {
-    "url": "https://github.com/walling/gulp-raml2html/issues"
-  },
   "dependencies": {
     "gulp-util": "^3.0.3",
-    "raml2html": "^1.6.0",
+    "raml2html": "^2.4.0",
     "through2": "^0.6.3"
   },
   "devDependencies": {
