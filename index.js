@@ -16,26 +16,30 @@ function raml2html(filename, source, https, callback) {
   var cwd = process.cwd();
   var nwd = path.resolve(path.dirname(filename));
   process.chdir(nwd);
-  raml2htmlLib.render(source, raml2htmlLib.getDefaultConfig(https), function(html) {
-    process.chdir(cwd);
-    process.nextTick(function() {
-      callback(null, html);
+  var config = raml2htmlLib.getDefaultConfig();
+  config.https = https;
+  raml2htmlLib.render(source, config)
+    .then(function (html) {
+      process.chdir(cwd);
+      process.nextTick(function () {
+        callback(null, html);
+      });
+    },
+    function (ramlError) {
+      process.chdir(cwd);
+      process.nextTick(function () {
+        var mark = ramlError.problem_mark;
+        mark = mark ? ':' + (mark.line + 1) + ':' + (mark.column + 1) : '';
+        var context = ('' + [ramlError.context]).trim();
+        context = context ? ' ' + context : '';
+        var message = util.format('%s%s: Parse error%s: %s', filename, mark, context, ramlError.message);
+        callback(new Error(message));
+      });
     });
-  }, function(ramlError) {
-    process.chdir(cwd);
-    process.nextTick(function() {
-      var mark = ramlError.problem_mark;
-      mark = mark ? ':' + (mark.line + 1) + ':' + (mark.column + 1) : '';
-      var context = ('' + [ramlError.context]).trim();
-      context = context ? ' ' + context : '';
-      var message = util.format('%s%s: Parse error%s: %s', filename, mark, context, ramlError.message);
-      callback(new Error(message));
-    });
-  });
 }
 
 function convertFile(file, source, https, self, callback) {
-  raml2html(file.path, source, https, function(error, html) {
+  raml2html(file.path, source, https, function (error, html) {
     if (error) {
       self.emit('error', new PluginError(PLUGIN_NAME, error));
     } else {
@@ -64,7 +68,7 @@ function gulpRaml2html(options) {
   var supportJsonInput = !!options.supportJsonInput;
   var https = options.https || false;
 
-  return through2.obj(function(file, enc, callback) {
+  return through2.obj(function (file, enc, callback) {
 
     if (file.isNull()) {
       // do nothing if no contents
@@ -87,7 +91,7 @@ function gulpRaml2html(options) {
     }
 
     this.push(file);
-    return callback(); 
+    return callback();
   });
 }
 
