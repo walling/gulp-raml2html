@@ -13,7 +13,6 @@ var PluginError = gutil.PluginError;
 var File = gutil.File;
 
 function raml2html(filename, source, https, callback) {
-  // https = false
   var cwd = process.cwd();
   var nwd = path.resolve(path.dirname(filename));
   process.chdir(nwd);
