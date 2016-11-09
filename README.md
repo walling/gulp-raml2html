@@ -5,7 +5,7 @@
 [![Build Status](https://travis-ci.org/walling/gulp-raml2html.svg?branch=master)](https://travis-ci.org/walling/gulp-raml2html)
 [![NPM version](https://badge.fury.io/js/gulp-raml2html.png)](http://badge.fury.io/js/gulp-raml2html)
 [![Dependency Status](https://david-dm.org/walling/gulp-raml2html/status.svg)](https://david-dm.org/walling/gulp-raml2html)
-[![devDependency Status](https://david-dm.org/walling/gulp-raml2html/dev-status.svg)](https://david-dm.org/walling/gulp-raml2html#info=devDependencies)
+[![devDependency Status](https://david-dm.org/walling/gulp-raml2html/dev-status.svg)](https://david-dm.org/walling/gulp-raml2html?type=dev)
 
 A simple [gulp](http://gulpjs.com/) plugin to automate the process of generating HTML documentation based on a RAML API.
 
