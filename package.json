@@ -39,7 +39,7 @@
   ],
   "dependencies": {
     "gulp-util": "^3.0.3",
-    "raml2html": "^2.4.0",
+    "raml2html": "^3.0.1",
     "through2": "^0.6.3"
   },
   "devDependencies": {
